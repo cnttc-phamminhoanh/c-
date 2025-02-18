@@ -149,24 +149,47 @@
 // }
 
 // 6. Tìm vị trí đầu tiên của một phần tử < x trong mảng đã sắp xếp
+// #include <iostream>
+// using namespace std;
+// int firstPositionSmallerX(int a[], int n, int x) {
+//   int l = 0, r = n - 1, res = -1;
+//   while (l <= r) {
+//     int mid = (l + r) / 2;
+//     if (a[mid] < x) {
+//       res = mid;
+//       r = mid - 1;
+//     }
+//     else {
+//       r = mid - 1;
+//     }
+//   }
+//   return res;
+// }
+// int main() {
+//   int a[10] = {4, 5, 5, 6, 6, 6, 6, 7, 8, 9};
+//   cout << firstPositionSmallerX(a, 10, 6) << endl;
+//   return 0;
+// }
+
+// 7. Tìm vị trí cuối cùng của một phần tử > x trong mảng đã sắp xếp
 #include <iostream>
 using namespace std;
-int firstPositionSmallerX(int a[], int n, int x) {
+int lastPositionBiggerX(int a[], int n, int x) {
   int l = 0, r = n - 1, res = -1;
   while (l <= r) {
     int mid = (l + r) / 2;
-    if (a[mid] < x) {
+    if (a[mid] > x) {
       res = mid;
-      r = mid - 1;
+      l = mid + 1;
     }
     else {
-      r = mid - 1;
+      l = mid + 1;
     }
   }
   return res;
 }
 int main() {
-  int a[10] = {4, 5, 5, 6, 6, 6, 6, 7, 8, 9};
-  cout << firstPositionSmallerX(a, 10, 6) << endl;
+  int a[10] = {1, 1, 1, 3, 3, 3, 3, 3, 3, 11};
+  cout << lastPositionBiggerX(a, 10, 2) << endl;
   return 0;
 }
