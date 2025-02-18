@@ -76,51 +76,74 @@
 // }
 
 // 4. In số lần xuất hiện của phần tử trong mảng đã sắp xếp, không có thì in ra 0
+// #include <iostream>
+// using namespace std;
+// int firstPositionSearch(int a[], int n, int target) {
+//   int l = 0, r = n - 1, res = -1;
+//   while (l <= r) {
+//     int mid = (l + r) / 2;
+//     if (target == a[mid]) {
+//       res = mid;
+//       r = mid - 1;
+//     }
+//     else if (target > a[mid]) {
+//       l = mid + 1;
+//     }
+//     else {
+//       r = mid - 1;
+//     }
+//   }
+//   return res;
+// }
+// int lastPositionSearch(int a[], int n, int target) {
+//   int l = 0, r = n - 1, res = -1;
+//   while (l <= r) {
+//     int mid = (l + r) / 2;
+//     if (target == a[mid]) {
+//       res = mid;
+//       l = mid + 1;
+//     }
+//     else if (target > a[mid]) {
+//       l = mid + 1;
+//     }
+//     else {
+//       r = mid - 1;
+//     }
+//   }
+//   return res;
+// }
+// int main() {
+//   int a[10] = {1, 2, 2, 3, 3, 3, 3, 3, 8, 9};
+//   int l = firstPositionSearch(a, 10, 3);
+//   int r = lastPositionSearch(a, 10, 3);
+//   if (l != -1) {
+//     cout << r - l + 1 << endl;
+//   }
+//   else {
+//     cout << "0" << endl;
+//   }
+//   return 0;
+// }
+
+// 5. Tìm vị trí đầu tiên của một phần tử > x trong mảng đã sắp xếp
 #include <iostream>
 using namespace std;
-int firstPositionSearch(int a[], int n, int target) {
+int firstPositionBiggerX(int a[], int n, int x) {
   int l = 0, r = n - 1, res = -1;
   while (l <= r) {
     int mid = (l + r) / 2;
-    if (target == a[mid]) {
+    if (a[mid] > x) {
       res = mid;
       r = mid - 1;
     }
-    else if (target > a[mid]) {
-      l = mid + 1;
-    }
     else {
-      r = mid - 1;
-    }
-  }
-  return res;
-}
-int lastPositionSearch(int a[], int n, int target) {
-  int l = 0, r = n - 1, res = -1;
-  while (l <= r) {
-    int mid = (l + r) / 2;
-    if (target == a[mid]) {
-      res = mid;
       l = mid + 1;
-    }
-    else if (target > a[mid]) {
-      l = mid + 1;
-    }
-    else {
-      r = mid - 1;
     }
   }
   return res;
 }
 int main() {
-  int a[10] = {1, 2, 2, 3, 3, 3, 3, 3, 8, 9};
-  int l = firstPositionSearch(a, 10, 3);
-  int r = lastPositionSearch(a, 10, 3);
-  if (l != -1) {
-    cout << r - l + 1 << endl;
-  }
-  else {
-    cout << "0" << endl;
-  }
+  int a[10] = {1, 2, 2, 3, 3, 3, 3, 4, 7, 9};
+  cout << firstPositionBiggerX(a, 10, 2) << endl;
   return 0;
 }
