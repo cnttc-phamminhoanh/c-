@@ -141,66 +141,101 @@
 // }
 
 // 6. Sắp xếp nhanh (quick sort)
+// #include <iostream>
+// using namespace std;
+// int lomutoPartition(int a[], int l, int r) {
+//   int pivot = a[r];
+//   int i = l - 1;
+//   for (int j = l; j < r; j++) {
+//     if (a[j] <= pivot) {
+//       i++;
+//       swap(a[i], a[j]);
+//     }
+//   }
+//   swap(a[i+1], a[r]);
+//   return i + 1;
+// }
+// void quickSortWithLomuto(int a[], int l, int r) {
+//   if (l >= r) return;
+//   int p = lomutoPartition(a, l, r);
+//   quickSortWithLomuto(a, l, p - 1);
+//   quickSortWithLomuto(a, p + 1, r);
+// }
+// int hoarePartition(int a[], int l, int r) {
+//   int pivot = a[l];
+//   int i = l - 1, j = r + 1;
+//   while (true) {
+//     do {
+//       i++;
+//     }
+//     while (a[i] < pivot);
+//     do {
+//       j--;
+//     }
+//     while (a[j] > pivot);
+//     if (i < j) {
+//       swap(a[i], a[j]);
+//     }
+//     else {
+//       return j;
+//     }
+//   }
+// }
+// void quickSortWithHoare(int a[], int l, int r) {
+//   if (l >= r) return;
+//   int p = hoarePartition(a, l, r);
+//   quickSortWithHoare(a, l, p);
+//   quickSortWithHoare(a, p + 1, r);
+// }
+// int main() {
+//   int a[10] = {44, 3, 3, 6, 0, 11, 9, 7, 2, 1};
+//   quickSortWithLomuto(a, 0, 9);
+//   for (int x: a) {
+//     cout << x << " ";
+//   }
+//   cout << endl;
+//   int b[10] = {44, 3, 30, 6, 0, 15, 9, 71, 1, 1};
+//   quickSortWithHoare(b, 0, 9);
+//   for (int x: b) {
+//     cout << x << " ";
+//   }
+//   cout << endl;
+//   return 0;
+// }
+
+// 7. Sắp xếp vun đống (heap sort)
 #include <iostream>
 using namespace std;
-int lomutoPartition(int a[], int l, int r) {
-  int pivot = a[r];
-  int i = l - 1;
-  for (int j = l; j < r; j++) {
-    if (a[j] <= pivot) {
-      i++;
-      swap(a[i], a[j]);
-    }
+void heapify(int a[], int n, int i) {
+  int largest = i;
+  int l = 2 * i + 1;
+  int r = 2 * i + 2;
+  if (l < n && a[l] > a[largest]) {
+    largest = l;
   }
-  swap(a[i+1], a[r]);
-  return i + 1;
-}
-void quickSortWithLomuto(int a[], int l, int r) {
-  if (l >= r) return;
-  int p = lomutoPartition(a, l, r);
-  quickSortWithLomuto(a, l, p - 1);
-  quickSortWithLomuto(a, p + 1, r);
-}
-int hoarePartition(int a[], int l, int r) {
-  int pivot = a[l];
-  int i = l - 1, j = r + 1;
-  while (true) {
-    do {
-      i++;
-    }
-    while (a[i] < pivot);
-    do {
-      j--;
-    }
-    while (a[j] > pivot);
-    if (i < j) {
-      swap(a[i], a[j]);
-    }
-    else {
-      return j;
-    }
+  if (r < n && a[r] > a[largest]) {
+    largest = r;
+  }
+  if (largest != i) {
+    swap(a[i], a[largest]);
+    heapify(a, n, largest);
   }
 }
-void quickSortWithHoare(int a[], int l, int r) {
-  if (l >= r) return;
-  int p = hoarePartition(a, l, r);
-  quickSortWithHoare(a, l, p);
-  quickSortWithHoare(a, p + 1, r);
+void heapSort(int a[], int n) {
+  for (int i = n / 2 - 1; i >= 0; i--) {
+    heapify(a, n, i);
+  }
+  for (int i = n - 1; i >= 0; i--) {
+    swap(a[i], a[0]);
+    heapify(a, i, 0);
+  }
 }
 int main() {
-  int a[10] = {44, 3, 3, 6, 0, 11, 9, 7, 2, 1};
-  quickSortWithLomuto(a, 0, 9);
+  int a[10] = {24, 32, 31, 6, 0, 15, 98, 72, 2, 1};
+  heapSort(a, 10);
   for (int x: a) {
-    cout << x << " ";
-  }
-  cout << endl;
-  int b[10] = {44, 3, 30, 6, 0, 15, 9, 71, 1, 1};
-  quickSortWithHoare(b, 0, 9);
-  for (int x: b) {
     cout << x << " ";
   }
   cout << endl;
   return 0;
 }
-
-// 7. Sắp xếp vun đống (heap sort)
