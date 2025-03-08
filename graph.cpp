@@ -288,12 +288,83 @@ Danh sách cạnh:
 Output: 
 1 2 4 3 6 7 9 8 5
 */
+// #include <iostream>
+// #include <vector>
+// #include <string.h>
+// #include <stack>
+// using namespace std;
+// bool visited[1001];
+// int n, m;
+// vector<int> v[1001];
+// void input() {
+//   cin >> n >> m;
+//   for (int i = 0; i < m; i++) {
+//     int x, y;
+//     cin >> x >> y;
+//     v[x].push_back(y);
+//     v[y].push_back(x);
+//   }
+//   memset(visited, false, sizeof(visited));
+// }
+// void dfs(int u) {
+//   stack<int> s;
+//   s.push(u);
+//   visited[u] = true;
+//   while (!s.empty()) {
+//     int d = s.top();
+//     s.pop();
+//     cout << d << " ";
+//     for (int x : v[d]) {
+//       if (!visited[x]) {
+//         s.push(x);
+//         visited[x] = true;
+//       }
+//     }
+//   }
+// }
+// void dfs1(int u) {
+//   cout << u << " ";
+//   visited[u] = true;
+//   for (int x : v[u]) {
+//     if (!visited[x]) {
+//       dfs1(x);
+//     }
+//   }
+// }
+// int main() {
+//   input();
+//   dfs(1);
+//   cout << endl;
+//   return 0;
+// }
+
+/*
+8/ Tìm kiếm theo chiều rộng
+Input:
+Số đỉnh, số cạnh:
+10 11
+Danh sách cạnh: 
+1 2
+1 3
+1 5
+1 10
+2 4
+3 6
+3 7
+3 9
+6 7
+5 8
+8 9
+Output: 
+1 2 3 5 10 4 6 7 9 8 
+*/
 #include <iostream>
 #include <vector>
 #include <string.h>
+#include <queue>
 using namespace std;
-bool visited[1001];
 int n, m;
+bool visited[1001];
 vector<int> v[1001];
 void input() {
   cin >> n >> m;
@@ -305,18 +376,25 @@ void input() {
   }
   memset(visited, false, sizeof(visited));
 }
-void dfs(int u) {
-  cout << u << " ";
+void bfs(int u) {
+  queue<int> q;
+  q.push(u);
   visited[u] = true;
-  for (int x : v[u]) {
-    if (!visited[x]) {
-      dfs(x);
+  while (!q.empty()) {
+    int d = q.front();
+    q.pop();
+    cout << d << " ";
+    for (int x : v[d]) {
+      if (!visited[x]) {
+        q.push(x);
+        visited[x] = true;
+      }
     }
   }
 }
 int main() {
   input();
-  dfs(1);
+  bfs(1);
   cout << endl;
   return 0;
 }
