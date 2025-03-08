@@ -245,27 +245,78 @@ Output:
 3 5
 4 5
 */
+// #include <iostream>
+// #include <sstream>
+// #include <vector>
+// using namespace std;
+// int main() {
+//   int n;
+//   cin >> n;
+//   cin.ignore();
+//   vector<pair<int, int>> v;
+//   for (int i = 1; i <= n; i++) {
+//     string s, num;
+//     getline(cin, s);
+//     stringstream ss(s);
+//     while (ss >> num) {
+//       if (stoi(num) > i) {
+//         v.push_back({i, stoi(num)});
+//       }
+//     }
+//   }
+//   for (auto it : v) {
+//     cout << it.first << " " << it.second << endl;
+//   }
+//   return 0;
+// }
+
+/*
+7/ Tìm kiếm theo chiều sâu
+Input:
+Số đỉnh, số cạnh:
+9 9
+Danh sách cạnh: 
+1 2
+1 3
+1 5
+2 4
+3 6
+3 7
+3 9
+5 8
+8 9
+Output: 
+1 2 4 3 6 7 9 8 5
+*/
 #include <iostream>
-#include <sstream>
 #include <vector>
+#include <string.h>
 using namespace std;
-int main() {
-  int n;
-  cin >> n;
-  cin.ignore();
-  vector<pair<int, int>> v;
-  for (int i = 1; i <= n; i++) {
-    string s, num;
-    getline(cin, s);
-    stringstream ss(s);
-    while (ss >> num) {
-      if (stoi(num) > i) {
-        v.push_back({i, stoi(num)});
-      }
+bool visited[1001];
+int n, m;
+vector<int> v[1001];
+void input() {
+  cin >> n >> m;
+  for (int i = 0; i < m; i++) {
+    int x, y;
+    cin >> x >> y;
+    v[x].push_back(y);
+    v[y].push_back(x);
+  }
+  memset(visited, false, sizeof(visited));
+}
+void dfs(int u) {
+  cout << u << " ";
+  visited[u] = true;
+  for (int x : v[u]) {
+    if (!visited[x]) {
+      dfs(x);
     }
   }
-  for (auto it : v) {
-    cout << it.first << " " << it.second << endl;
-  }
+}
+int main() {
+  input();
+  dfs(1);
+  cout << endl;
   return 0;
 }
