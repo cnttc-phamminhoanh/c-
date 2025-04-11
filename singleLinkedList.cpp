@@ -55,12 +55,12 @@ void insertLast(node &head, int x) {
 
 void insertMiddle(node &head, int x, int position) {
   int size = sizeOfList(head);
-  if (position < 1 || position > position + 1) return;
-  if (size == 1) {
+  if (position < 1 || position > size + 1) return;
+  if (position == 1) {
     insertFirst(head, x);
     return;
   }
-  else if (size == size + 1) {
+  else if (position == size + 1) {
     insertLast(head, x);
     return;
   }
@@ -80,6 +80,54 @@ void printLinkedList(node head) {
   }
 }
 
+void removeFirst(node &head) {
+  if (head == NULL) return;
+  else {
+    node tmp = head;
+    head = tmp -> next;
+    delete tmp;
+  }
+}
+
+void removeLast(node &head) {
+  if (head == NULL) return;
+  else {
+    node prev = NULL, tmp = head;
+    while (tmp -> next != NULL) {
+      prev = tmp;
+      tmp = tmp -> next;
+    }
+    if (prev == NULL) {
+      head = NULL;
+      delete tmp;
+    }
+    else {
+      prev -> next = NULL;
+      delete tmp;
+    }
+  }
+}
+
+void removeMiddle(node &head, int position) {
+  int size = sizeOfList(head);
+  if (position < 1 || position > size) return;
+  else if (position == 1) {
+    removeFirst(head);
+  }
+  else if (position == size) {
+    removeLast(head);
+  }
+  else {
+    node prev = NULL, tmp = head;
+    for (int i = 1; i < position; i++) {
+      prev = tmp;
+      tmp = tmp -> next;
+    }
+    prev -> next = tmp -> next;
+    delete tmp;
+  }
+}
+
 int main() {
   node head = NULL;
   while (true) {
@@ -89,6 +137,9 @@ int main() {
     cout << "3. Add element to end of linked list " << endl;
     cout << "4. Add element to middle of linked list " << endl;
     cout << "5. Print elements in linked list " << endl;
+    cout << "6. Delete element at the beginning head of linked list " << endl;
+    cout << "7. Delete element at the end of linked list " << endl;
+    cout << "8. Delete element in the middle of linked list " << endl;
     cout << "==================================" << endl;
     int select;
     cout << "Enter selection: ";
@@ -121,6 +172,20 @@ int main() {
         cout << "Linked list: ";
         printLinkedList(head);
         cout << endl << endl;
+        break;
+      case 6:
+        removeFirst(head);
+        cout << endl;
+        break;
+      case 7:
+        removeLast(head);
+        cout << endl;
+        break;
+      case 8:
+        cout << "Enter position: ";
+        int p; cin >> p;
+        removeMiddle(head, p);
+        cout << endl;
         break;
       default:
         return 0;
